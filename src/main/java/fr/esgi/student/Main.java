@@ -1,6 +1,5 @@
 package fr.esgi.student;
 
-import com.google.firebase.FirebaseApp;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +15,7 @@ public class Main {
 
                 frame.setVisible(true);
 
-                FirebaseApp.initializeApp();
+                MyFirebaseUtils.login();
             }
         });
     }
