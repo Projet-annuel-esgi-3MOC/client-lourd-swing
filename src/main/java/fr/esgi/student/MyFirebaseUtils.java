@@ -8,7 +8,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MyFirebaseUtils {
-    static void login() {
+    static FirebaseApp login() {
+
+        FirebaseApp app;
+
+
         InputStream serviceAccount = MyFirebaseUtils.class.getResourceAsStream(
                 "/cookup-afee1-firebase-adminsdk-8z5z1-350824fdb2.json");
 
@@ -19,14 +23,16 @@ public class MyFirebaseUtils {
         try {
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
+                    .setProjectId("cookup-afee1")
+//                    .setDatabaseUrl("https://<DATABASE_NAME>.firebaseio.com/")
                     .build();
 
-            FirebaseApp.initializeApp(options);
+            app = FirebaseApp.initializeApp(options);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
+        return app;
     }
 }
