@@ -10,43 +10,63 @@ import com.google.firebase.cloud.FirestoreClient;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class Main {
+    static MainFrame frame;
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                MainFrame frame = new MainFrame("Todo ESGI", new Dimension(800, 600));
+                frame = new MainFrame("Todo ESGI", new Dimension(800, 600));
 
                 frame.setVisible(true);
 
-                FirebaseApp app = MyFirebaseUtils.login();
+                FirebaseApp app = loginFirebase();
 
-                System.out.println(app.getName());
-                System.out.println(app.getOptions());
+                List<String> todos = listFirebaseTodosonIHM(app);
 
-                Firestore db = FirestoreClient.getFirestore(app);
-
-                ApiFuture<QuerySnapshot> query = db.collection("dev-todos").get();
-
-                QuerySnapshot querySnapshot;
-                try {
-                    querySnapshot = query.get();
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException(e);
-                }
-                List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-
-                for (QueryDocumentSnapshot document :
-                        documents) {
-                    System.out.println("id" + document.getId());
-                    System.out.println("id" + document.getString("content"));
-                }
+                frame.setTodos(todos);
             }
         });
+    }
+
+    private static FirebaseApp loginFirebase() {
+        FirebaseApp app = MyFirebaseUtils.login();
+
+        System.out.println(app.getName());
+        System.out.println(app.getOptions());
+
+        return app;
+    }
+
+    private static List<String> listFirebaseTodosonIHM(FirebaseApp app) {
+        Firestore db = FirestoreClient.getFirestore(app);
+
+        ApiFuture<QuerySnapshot> query = db.collection("dev-todos").get();
+
+        QuerySnapshot querySnapshot;
+        try {
+            querySnapshot = query.get();
+        } catch (InterruptedException | ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+
+        List<String> res = new ArrayList<>();
+
+        for (QueryDocumentSnapshot document :
+                documents) {
+            System.out.println("id" + document.getId());
+            System.out.println("id" + document.getString("content"));
+
+            res.add(document.getString("content"));
+        }
+
+        return res;
     }
 }
