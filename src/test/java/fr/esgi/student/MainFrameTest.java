@@ -1,8 +1,6 @@
 package fr.esgi.student;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.awt.*;
 
@@ -11,8 +9,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainFrameTest {
 
     private final MainFrame mainFrame = new MainFrame("Test mainframe", new Dimension(200, 200));
+
+//    @BeforeAll
+//    static void beforeClass() {
+//        boolean headless = false;
+//        try {
+//            mainFrame.getTitle();
+//        } catch (HeadlessException e) {
+//            headless = true;
+//        }
+//        Assumptions.assumeFalse(headless);
+//    }
+
     @BeforeEach
     void setUp() {
+        boolean headless = false;
+        try {
+            mainFrame.getTitle();
+        } catch (HeadlessException e) {
+            headless = true;
+        }
+        Assumptions.assumeFalse(headless);
     }
 
     @AfterEach
