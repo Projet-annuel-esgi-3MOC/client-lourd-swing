@@ -14,26 +14,46 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         initIHM();
+
+//        this.pack();
+        this.setVisible(true);
+
     }
 
     private void initIHM() {
         JPanel jPanel = new JPanel();
         jPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        jPanel.add(new JLabel("Liste de todos a faire"), gridBagConstraints);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.FIRST_LINE_START;
 
-        gridBagConstraints.gridy = 1;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+
+        jPanel.add(new JLabel("Liste de todos a faire"), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
 
         jList = new JList<>();
         todosModel = new DefaultListModel<>();
         jList.setModel(todosModel);
 
-        jPanel.add(jList, gridBagConstraints);
+        jPanel.add(jList, gbc);
 
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        jPanel.add(new JTextField("Nom du todo"), gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.VERTICAL;
+
+        jPanel.add(new JTextArea("Description du todo"), gbc);
 
         this.setContentPane(jPanel);
     }

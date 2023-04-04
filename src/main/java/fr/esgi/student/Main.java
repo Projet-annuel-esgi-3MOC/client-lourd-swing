@@ -16,8 +16,6 @@ public class Main {
             public void run() {
                 frame = new MainFrame("Cookup Todo Manager", new Dimension(800, 600));
 
-                frame.setVisible(true);
-
                 FirebaseApp app = MyFirebaseUtils.loginFirebase();
 
                 List<String> todos = MyFirebaseUtils.listFirebaseTodosOnIHM(app);
