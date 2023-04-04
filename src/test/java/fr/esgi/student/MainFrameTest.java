@@ -8,18 +8,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainFrameTest {
 
-    private final MainFrame mainFrame = new MainFrame("Test mainframe", new Dimension(200, 200));
+    private static MainFrame mainFrame;
 
-//    @BeforeAll
-//    static void beforeClass() {
-//        boolean headless = false;
-//        try {
-//            mainFrame.getTitle();
-//        } catch (HeadlessException e) {
-//            headless = true;
-//        }
-//        Assumptions.assumeFalse(headless);
-//    }
+    @BeforeAll
+    static void beforeClass() {
+        boolean headless = false;
+        try {
+            mainFrame = new MainFrame("Test mainframe", new Dimension(200, 200));
+        } catch (HeadlessException e) {
+            headless = true;
+        }
+        Assumptions.assumeFalse(headless);
+    }
 
     @BeforeEach
     void setUp() {
